@@ -276,13 +276,16 @@ if ! exists('g:ctab_disable_checkalign') || g:ctab_disable_checkalign==0
       return "\<CR>"
     else
 	  " return "\<CR>\<c-r>=<SNR>".s:SID().'_CheckAlign(line(''.''))'."\<CR>\<END>"
-	  let b:linelength = strlen(getline('.'))
-	  let b:curcol = col('.')
-	  let b:moveback = b:linelength - b:curcol
-	  if b:curcol != b:linelength + 1
-		return "\<CR>\<c-r>=<SNR>".s:SID().'_CheckAlign(line(''.''))'."\<CR>\<END>\<ESC>" . b:moveback . "\<left>i"
-	  endif
-	  return "\<CR>\<c-r>=<SNR>".s:SID().'_CheckAlign(line(''.''))'."\<CR>\<END>"
+      let b:linelength = strlen(getline('.'))
+      let b:curcol = col('.')
+      let b:moveback = b:linelength - b:curcol
+      if b:moveback > 0
+        return "\<CR>\<c-r>=<SNR>".s:SID().'_CheckAlign(line(''.''))'."\<CR>\<END>\<ESC>" . b:moveback . "\<left>i"
+      elseif b:moveback == 0
+        return "\<CR>\<c-r>=<SNR>".s:SID().'_CheckAlign(line(''.''))'."\<CR>\<END>\<left>"
+      else
+        return "\<CR>\<c-r>=<SNR>".s:SID().'_CheckAlign(line(''.''))'."\<CR>\<END>"
+      endif
     endif
   endfun
 
