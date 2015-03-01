@@ -101,6 +101,11 @@ endif
 "
 " endfun
 
+fun! s:ShiftWidth()
+  return exists("b:insidetabs")?(b:insidetabs):((&sts==0)?((&sw==0)?&ts:&sw):&sts)
+endfun
+
+
 " Insert a smart tab.
 fun! s:InsertSmartTab()
   " Clear the status
@@ -114,7 +119,7 @@ fun! s:InsertSmartTab()
     return "\<Tab>"
   endif
 
-  let sts=exists("b:insidetabs")?(b:insidetabs):((&sts==0)?&sw:&sts)
+  let sts=s:ShiftWidth()
   let sp=(virtcol('.') % sts)
   if sp==0 | let sp=sts | endif
   return strpart("                  ",0,1+sts-sp)
@@ -147,7 +152,7 @@ fun! s:DoSmartDelete()
   if lastchar != ' ' | return ((&digraph)?("\<BS>".lastchar): '')  | endif  " Delete non space at end / Maintain digraphs
 
   " Work out how many tabs to use
-  let sts=(exists("b:insidetabs")?(b:insidetabs):((&sts==0)?(&sw):(&sts)))
+  let sts=s:ShiftWidth()
 
   let ovc=virtcol('.')              " Find where we are
   let sp=(ovc % sts)                " How many virtual characters to delete
