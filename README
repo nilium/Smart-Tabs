@@ -1,3 +1,15 @@
+This is a FORK of https://github.com/vim-scripts/Smart-Tabs
+
+Changes:
+
+- No changes yet
+
+Changes are licensed under the same terms as the original
+
+===============
+Original README
+===============
+
 This is a mirror of http://www.vim.org/scripts/script.php?script_id=231
 
 There are many different arguments about tabs and stuff.  My current personal preference is a choice of tabbing that is independent of anybody&#039s viewing settings.  
