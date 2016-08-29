@@ -4,6 +4,7 @@ Changes:
 
 - Merge b:ctab_lastalign fix from @skroll
 - Merge increase supported line size from @skroll
+- Merge fix for ts=0 from @nilium
 
 Changes are licensed under the same terms as the original
 
