@@ -102,7 +102,7 @@ endif
 " endfun
 
 fun! s:ShiftWidth()
-  return exists("b:insidetabs")?(b:insidetabs):((&sts==0)?((&sw==0)?&ts:&sw):&sts)
+  return exists("b:insidetabs")?(b:insidetabs):((&sts<=0)?((&sw==0)?&ts:&sw):&sts)
 endfun
 
 
