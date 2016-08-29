@@ -2,7 +2,8 @@ This is a FORK of https://github.com/vim-scripts/Smart-Tabs
 
 Changes:
 
-- No changes yet
+- Merge b:ctab_lastalign fix from @skroll
+- Merge increase supported line size from @skroll
 
 Changes are licensed under the same terms as the original
 
