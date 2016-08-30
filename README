@@ -7,6 +7,7 @@ Changes:
 - Merge fix for ts==0 from @nilium
 - Handle sts==-1 by using sw instead (per vim behavior)
 - Merge two fixes for breaking lines from @mdlerch
+- Merge fix for <BS> deleting incorrect number of spaces from @mmedved
 
 Changes are licensed under the same terms as the original
 
