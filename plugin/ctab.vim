@@ -3,7 +3,7 @@
 " Version: 2.6
 " Last Modified: December 2010
 "
-" Histroy:
+" History:
 "   1.0: - Added RetabIndent command - similar to :retab, but doesn't cause
 "         internal tabs to be modified.
 "   1.1: - Added support for backspacing over spaced tabs 'smarttab' style
@@ -47,7 +47,7 @@
 "
 "  CTabAlignTo(n)
 "     'Tab' to the n'th column from the start of the indent.
-
+"
 " g:ctab_filetype_maps
 "   set this to true if script used as a filetype plugin
 " g:ctab_disable_checkalign
@@ -84,27 +84,9 @@ if !exists('g:ctab_disable_tab_maps') || ! g:ctab_disable_tab_maps
   exe  'inoremap '.s:buff_map.'<silent> <expr> <BS> <SID>DoSmartDelete()."\<BS>"'
 endif
 
-"exe 'imap '.s:buff_map.'<silent> <expr> <BS> <SID>KeepDelLine()."\<BS>"
-
-" MRG: TODO
-"exe 'imap '.s:buff_map.'<silent> <expr> <c-d> :call <SID>SmartDeleteTab()<CR>'
-"exe 'imap '.s:buff_map.'<silent> <c-t> <SID>SmartInsertTab()'
-" fun! s:SmartDeleteTab()
-"   let curcol=col('.')-&sw
-"   let origtxt=getline('.')
-"   let repl=matchstr(origtxt,'^\s\{-}\%'.(&sw+2)."v')
-"   if repl == '' then
-"     return "\<c-o>".':s/	*\zs	/'.repeat(' ',(&ts-&sw)).'/'."\<CR>\<c-o>".curcol.'|'
-"   else
-"     return "\<c-o>".':s/^\s\{-}\%'.(&sw+1)."v//\<CR>\<c-o>".curcol."|"
-"   end
-"
-" endfun
-
 fun! s:ShiftWidth()
   return exists("b:insidetabs")?(b:insidetabs):((&sts<=0)?((&sw==0)?&ts:&sw):&sts)
 endfun
-
 
 " Insert a smart tab.
 fun! s:InsertSmartTab()
@@ -182,6 +164,7 @@ fun! s:Column(line)
   endwhile
   return c
 endfun
+
 fun! s:StartColumn(lineNo)
   return s:Column(matchstr(getline(a:lineNo),'^\s*'))
 endfun
@@ -254,6 +237,7 @@ if ! exists('g:ctab_disable_checkalign') || g:ctab_disable_checkalign==0
   fun! s:SID()
     return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze_SID$')
   endfun
+  
   " Get the spaces at the end of the  indent correct.
   " This is trickier than it should be, but this seems to work.
   fun! s:CheckCR()
@@ -278,9 +262,6 @@ if ! exists('g:ctab_disable_checkalign') || g:ctab_disable_checkalign==0
     endif
   endfun
 
-
-
-  "exe 'inoremap '.s:buff_map.'<silent> <CR> <CR><c-r>=<SID>CheckAlign(line(''.''))."\<lt>END>"<CR>'
   exe 'inoremap '.s:buff_map.'<silent> <expr> <CR> <SID>CheckCR()'
   exe 'nnoremap '.s:buff_map.'<silent> o o<c-r>=<SID>CheckAlign(line(''.''))."\<lt>END>"<CR>'
   exe 'nnoremap '.s:buff_map.'<silent> O O<c-r>=<SID>CheckAlign(line(''.''))."\<lt>END>"<CR>'
@@ -290,6 +271,7 @@ if ! exists('g:ctab_disable_checkalign') || g:ctab_disable_checkalign==0
   " The only way I can think to do this is to remap the =
   " so that it calls the original, then checks all the indents.
   exe 'map '.s:buff_map.'<silent> <expr> = <SID>SetupEqual()'
+  
   fun! s:SetupEqual()
     set operatorfunc=CtabRedoIndent
     " Call the operator func so we get the range
@@ -352,6 +334,5 @@ endfun
 "   Optional argument specified the value of the new tabstops
 "   Bang (!) causes trailing whitespace to be gobbled.
 com! -nargs=? -range=% -bang -bar RetabIndent call <SID>RetabIndent(<q-bang>,<line1>, <line2>, <q-args> )
-
 
 " vim: sts=2 sw=2 et
